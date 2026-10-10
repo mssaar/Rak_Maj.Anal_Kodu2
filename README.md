@@ -1,0 +1,1 @@
+# Rak_Maj.Anal_Kodu2
