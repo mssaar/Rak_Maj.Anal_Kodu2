@@ -1,0 +1,57 @@
+---
+title: "Kausaalne hindamine: John Snow koolerauuring"
+author: "Steven Sepp ja Mark Sverker Saar"
+date: "2026"
+output: beamer_presentation
+---
+
+## 1. Uurimisprobleem
+
+- **Taust:** 19. sajandi keskel Londonis levis koolera. Põhjuseks peeti halba õhku (miasmi teooria).
+- **Hüpotees (John Snow):** Koolera levib hoopis saastunud vee kaudu.
+- **Sekkumine:** 1852. aastal kolis Lambethi vee-ettevõte oma veevõtukoha Londonist ülesvoolu (puhtam vesi). S&V ettevõte jättis veevõtukoha saastunud piirkonda.
+- **Eesmärk:** Hinnata puhta vee ("sekkumine") kausaalset mõju koolerasurmadele piirkonnas.
+
+## 2. Kausaalse identifitseerimise strateegia (DID)
+
+- **Meetod:** Erinevused-erinevustes (Difference-in-Differences, DID).
+- **Mõjugrupp (Treated):** Lambethi piirkond (sai alates 1854 puhta vee).
+- **Kontrollgrupp (Control):** S&V piirkond (jäi saastunud veele).
+- **Aeg (Post):** 1849 (enne) vs 1854 (pärast).
+- **Väljund (Outcome):** Koolerasurmad 10 000 elaniku kohta.
+- **Eeldus:** Ilma veevõtukoha kolimiseta oleks suremuse muutus olnud mõlemas piirkonnas sarnane (paralleelsed trendid).
+
+## 3. Kausaalne mudel ja DAG
+
+- Sekkumine (puhtam vesi) on otsene põhjus suremuse vähenemisele.
+- Aeg ja Piirkond määravad veevõtukoha puhtuse ja võivad mõjutada ka üldist suremuse taset.
+
+**DAG struktuur:**
+Piirkond $\rightarrow$ Vesi $\rightarrow$ Suremus
+Aeg $\rightarrow$ Vesi
+Aeg $\rightarrow$ Suremus
+Piirkond $\rightarrow$ Suremus
+
+## 4. Kirjeldav statistika ja trendid
+
+(Lisage siia esitlust tehes R-st saadud koolerasuremuse DID joonis `koolerasuremus_did.pdf`)
+
+- 1849. aastal oli suremus mõlemas grupis väga sarnane (~130-135 surma).
+- 1854. aastaks tõusis suremus kontrollgrupis veidi (kuni 146,6).
+- Mõjugrupis langes suremus aga drastiliselt (84,9 peale).
+
+## 5. Regressioonitulemused (DID hinnang)
+
+DID mudeli valem:
+$$Deathrate = \beta_0 + \beta_1 Post + \beta_2 Treated + \beta_3 (Post \times Treated)$$
+
+- **Tulemus:** $\beta_3 = -56,9$
+- **Tõlgendus:** Puhta vee pakkumine hoidis hinnanguliselt ära 56,9 surmajuhtumit 10 000 inimese kohta.
+
+## 6. Järeldused ja usaldusväärsus
+
+- **Järeldus:** Tulemus toetab tugevalt Snow hüpoteesi – koolerat levitas saastunud vesi.
+- **Usaldusväärsus:** 
+    - Analüüs tugineb agregeeritud andmetel (4 andmepunkti), seega p-väärtusi ei saa standardmudeliga leida.
+    - Kuid kausaalse meetodi (DID) loogika ja suur efekti suurus muudavad tulemuse praktilises mõttes väga usutavaks. 
+    - Paralleelsete trendide eeldus on ajaloolises kontekstis hästi põhjendatud.
