@@ -78,7 +78,13 @@ joonis <- ggplot(snow_data, aes(year, deathrate,
   geom_point(size = 3) +
   geom_line(data = kontrafakt_df, aes(year, deathrate), inherit.aes = FALSE,
             linetype = "dashed", color = "grey40") +
-  scale_x_continuous(breaks = c(1849, 1854)) +
+  annotate("text", x = 1851.5, y = 131, label = "mõjugrupi kontrafaktuaalne trend",
+           color = "grey30", size = 3.5) +
+  annotate("segment", x = 1854.15, xend = 1854.15, y = d(1854, 1), yend = kontrafakt,
+           arrow = arrow(ends = "both", length = unit(0.2, "cm")), color = "grey20") +
+  annotate("text", x = 1854.25, y = (d(1854, 1) + kontrafakt) / 2,
+           label = "DID = −56,9", hjust = 0, size = 3.5) +
+  scale_x_continuous(breaks = c(1849, 1854), limits = c(1848.8, 1855.1)) +
   labs(x = "Aasta", y = "Surmi 10 000 elaniku kohta", color = NULL) +
   theme_minimal() +
   theme(legend.position = "bottom")
